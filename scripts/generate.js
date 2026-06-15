@@ -1,12 +1,33 @@
 const fs=require('fs'),path=require('path'),today=new Date().toISOString().slice(0,10),slug=today;
-const feed=JSON.parse(fs.readFileSync(path.join(__dirname,'..','feed.json'),'utf8'));
-if(feed.posts.find(p=>p.slug===slug)){console.log('Exists');process.exit(0)}
-const pool=[[["装修前必看：100平米的房子装修要多少钱","简装8-12万、中档15-25万、高档30万+。钱主要花在水电厨卫这些不能省的地方。","装修预算"],["装修合同怎么签才不吃亏：10个必须注意的条款","付款节点按工程进度分期、工期超时违约金每天多少、增项必须书面确认、保修期至少2年。","避坑指南"],["全屋定制还是买成品家具？优缺点分析","定制充分利用空间但贵、成品便宜但尺寸不一定合适。柜子定制其他买成品性价比最高。","装修决策"]],[["水电改造的12个注意事项：藏起来的才是最重要的","强弱电分开走管、厨卫用4平方线、插座宁多勿少、水管走顶好维修、打压测试不能省。","水电工程"],["客厅装修设计：6种布局方案和尺寸参考","沙发到电视距离3-4米最舒适、茶几离沙发40-50cm、电视中心高度1.1米。小户型选一字型沙发。","客厅设计"],["装修风格怎么选：北欧日式简约轻奢的区别","北欧用原木色+白墙+绿植；日式原木+榻榻米+移门；现代简约黑白灰+金属+大理石；轻奢加铜色元素。","装修风格"]],[["厨房装修的9个细节：用了才知道有多重要","台面高度=身高÷2+5、高低台设计炒菜区低洗菜区高、台下盆好打理、预留足够插座带开关。","厨房设计"],["卫生间干湿分离怎么做：4种方案对比","玻璃隔断最常用、浴帘最省钱但会发霉、半墙+玻璃颜值高空间通透、完全独立适合大户型。","卫生间设计"],["地板选瓷砖还是木地板：不同房间不同选择","客厅厨房阳台选瓷砖耐用防水、卧室选木地板温馨脚感好。强化地板性价比最高实木最贵。","材料选择"]],[["墙面装修用什么材料好：乳胶漆墙纸墙布对比","乳胶漆性价比最高颜色多、墙纸花样多但寿命5-8年、墙布耐用但有接缝、艺术漆质感好但贵。","墙面材料"],["窗帘怎么选：客厅卧室不同功能不同布料","客厅选透光纱帘+遮光帘双层、卧室选全遮光、厨房选防水百叶窗。窗帘杆要装到天花板附近显层高高。","软装搭配"],["装修后多久可以入住：甲醛要散多久","装修完至少通风3个月。夏天通风效率是冬天的3倍。最好经过一个夏天再入住。检测合格再搬进去。","入住指南"]],[["小户型装修显大的8个技巧","浅色系扩大空间感、通铺地板不分割、不做吊顶或极简吊顶、收纳做到顶、镜面反射增大空间。","小户型"],["二手房翻新要注意什么：隐蔽工程是重点","检查水电线路是否需要更换、墙面空鼓要处理、老房子的结构改造要确认承重墙。","旧房改造"],["灯光设计不是只装一个吸顶灯：分区照明方案","主灯+辅助灯+氛围灯三层照明。客厅用筒灯+落地灯、餐厅用吊灯、卧室用壁灯+台灯。","灯光设计"]],[["定制衣柜的内部结构怎么规划：挂放叠的比例","挂衣区占60%以上、叠放区20%、抽屉10%。长衣区1.5米以上、短衣区1米。多做活动层板灵活调整。","收纳设计"],["装修最容易踩的10个坑：多花了钱还不实用","过度吊顶压层高、太多射灯用不上、开放式置物架落灰、厨房台面选了深色显脏、插座被家具挡住。","避坑指南"],["装修材料清单：自己买和装修公司包的区别","半包=自己买主材（瓷砖地板卫浴）+公司包辅材；全包=全部公司买；清包=全部自己买找工人做。","装修预算"]],[["阳台装修的多种可能：不只是晾衣服","封阳台做成休闲区、做洗衣房、做小书房、做宠物区、做植物角。注意物业规定能不能封。","阳台设计"],["开关插座布局黄金法则：每个房间需要多少个","客厅10-12个、卧室6-8个、厨房8-10个带开关、卫生间3-4个带防溅盒。床头插座离地70cm。","水电工程"],["装修完最后悔没做的事：过来人的血泪总结","没多做收纳柜、没装厨余垃圾处理器、没预留智能家居线路、没在玄关做换鞋凳、没装洗碗机。","避坑指南"]],[["实木家具怎么挑：橡木胡桃木松木的区别","橡木硬重耐用价格中等、胡桃木纹理漂亮价格高、松木软便宜容易有坑。看木纹是不是连续的判断是否贴皮。","材料选择"],["软装搭配入门：抱枕地毯挂画的色彩搭配","同一空间不超过3个主色调。用抱枕和挂画做点缀色。地毯选比沙发大一号的尺寸。","软装搭配"],["儿童房装修：安全环保是第一位的","家具圆角设计、选环保等级最高的材料、插座装保护盖、配色活泼但不要太花哨影响专注。","儿童房"]]];
-const idx=(new Date().getDate()-1)%pool.length,items=pool[idx];
-const postTitle=items[0].tag+' | '+today;
-feed.posts.unshift({slug,date:today,title:postTitle,items:items.map(i=>({title:i[0],desc:i[1],tag:i[2]}))});
+const fp=path.join(__dirname,'..','feed.json');
+const feed=JSON.parse(fs.readFileSync(fp,'utf8'));
+if(!feed.posts)feed.posts=[];
+if(feed.posts.find(p=>p.slug===slug)){console.log('Already exists');process.exit(0)}
+
+// Content pools - 8 groups cycling through dates
+const pools=[
+[{t:'效率翻倍！这3个小技巧让你的工作流更顺畅',tag:'效率技巧',d:'减少切换、批处理、自动化——3个简单技巧立刻提升效率'}],
+[{t:'2026年必备的免费工具推荐',tag:'工具推荐',d:'精心挑选的实用免费工具，日常办公和创作都能用上'}],
+[{t:'为什么你总觉得时间不够用？',tag:'时间管理',d:'不是你不够努力，而是方法需要调整。重新规划你的时间分配'}],
+[{t:'工作学习两不误的小窍门',tag:'学习方法',d:'高效人士都在用的学习方法，每天只需投入少量时间'}],
+[{t:'比勤奋更重要的是方法',tag:'思维方式',d:'换个角度思考问题，可能会发现之前困扰你的事其实很简单'}],
+[{t:'减少决策疲劳的日常习惯',tag:'习惯养成',d:'每天做太多小决定会消耗精力，建立习惯让大脑自动运行'}],
+[{t:'让生活更有条理的整理术',tag:'生活技巧',d:'整理不只是打扫房间，更是整理思绪和提升幸福感的方式'}],
+[{t:'数字时代如何保持专注',tag:'专注力',d:'手机和社交媒体在偷走你的注意力，教你几招夺回主动权'}],
+];
+
+const idx=(new Date().getDate()-1)%pools.length;
+const pool=pools[idx];
+const titles=['每日分享 | '+today,'实用技巧 | '+today,'效率提升 | '+today,'好物推荐 | '+today];
+const title=titles[new Date().getDate()%titles.length];
+
+feed.posts.unshift({slug,date:today,title:title,items:pool});
 feed.updated=today;
-fs.writeFileSync(path.join(__dirname,'..','feed.json'),JSON.stringify(feed,null,2));
-const html='<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>'+postTitle+'</title><style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg:#fafafa;--card:#fff;--text:#1a1a2e;--t2:#666;--accent:#78716c;--border:#e5e7eb;--r:10px}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}.container{max-width:800px;margin:0 auto;padding:0 20px}header{background:var(--card);border-bottom:1px solid var(--border);padding:20px 0;margin-bottom:32px}header a{color:var(--accent);text-decoration:none;font-size:.9rem}header h1{font-size:1.3rem;margin-top:8px}.post{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px}.post .date{color:var(--t2);font-size:.8rem;margin-bottom:20px}.entry{margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}.entry:last-child{border-bottom:none}.entry h3{font-size:1rem;margin-bottom:4px}.entry p{color:var(--t2);font-size:.9rem}.tag{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:10px;margin-left:6px;background:var(--bg);color:var(--accent)}footer{text-align:center;padding:32px 20px;color:var(--t2);font-size:.8rem}@media(max-width:600px){.post{padding:18px}}</style></head><body><header><div class="container"><a href="../index.html">← 首页</a><h1>'+postTitle+'</h1></div></header><main class="container"><article class="post"><div class="date">📅 '+today+'</div>'+items.map(i=>'<div class="entry"><h3>'+i[0]+' <span class="tag">'+i[2]+'</span></h3><p>'+i[1]+'</p></div>').join('')+'</article></main><footer><p>每日更新</p></footer></body></html>';
-fs.writeFileSync(path.join(__dirname,'..','posts',slug+'.html'),html);
-console.log('Generated:',postTitle);
+fs.writeFileSync(fp,JSON.stringify(feed,null,2));
+
+// Create post HTML
+const dir=path.join(__dirname,'..','posts');
+if(!fs.existsSync(dir))fs.mkdirSync(dir,{recursive:true});
+const h=`<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${title}</title><meta name="description" content="${pool.map(i=>i.t).join('、')}"><style>body{font:16px -apple-system,sans-serif;background:#fafafa;color:#1a1a2e;line-height:1.8;margin:0;padding:16px}.c{max-width:700px;margin:0 auto}article{background:#fff;padding:24px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.05)}h1{font-size:1.3rem;margin:0 0 4px}.date{font-size:.8rem;color:#666;margin-bottom:20px}.item{margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #eee}.item h2{font-size:1rem;margin:0 0 4px}.item p{font-size:.88rem;color:#555}.tag{display:inline-block;background:#eff6ff;color:#2563eb;font-size:.68rem;padding:2px 8px;border-radius:10px;margin-left:6px}footer{text-align:center;padding:20px;color:#999;font-size:.72rem}</style></head><body><div class="c"><article><h1>${title}</h1><p class="date">📅 ${today}</p>${pool.map(i=>'<div class="item"><h2>'+i.t+' <span class="tag">'+i.tag+'</span></h2><p>'+i.d+'</p></div>').join('')}</article></div><footer>每日自动更新</footer></body></html>`;
+fs.writeFileSync(path.join(dir,slug+'.html'),h);
+console.log('Generated:',title);
